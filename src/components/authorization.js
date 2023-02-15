@@ -13,7 +13,8 @@ function Authorization() {
     const validationSchema = Yup.object().shape({
         email: Yup.string().required('Please enter email').email('Invalid email address'),
         password: Yup.string().required('Please enter your password').
-        min(8, 'Password is too short - should be 8 chars minimum.').
+        min(6, 'Password is too short - should be 6 chars minimum.').
+        max(255, 'Password is too long - should be 255 chars maximum.').
         matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
             'Password must contain at least one Latin letter and one number.')
     });
