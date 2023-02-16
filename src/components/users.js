@@ -90,7 +90,7 @@ function Users() {
                                         <TableCell>{row.firstName}</TableCell>
                                         <TableCell align="right">{row.lastName}</TableCell>
                                         <TableCell align="right">{row.email}</TableCell>
-                                        <TaіцbleCell align="right">{getStatus(row.isActive)}</TaіцbleCell>
+                                        <TableCell align="right">{getStatus(row.isActive)}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
