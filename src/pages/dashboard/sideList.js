@@ -1,8 +1,15 @@
-import {Box, Drawer, List, ListItem, ListItemButton, ListItemText} from "@mui/material";
+import {
+    Box,
+    CssBaseline,
+    Drawer,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+} from "@mui/material";
 import {useMemo} from "react";
 import Users from "./users/users";
 import {Route, Routes, useNavigate} from "react-router-dom";
-
 
 function SideList() {
     const drawWidth = '220px';
@@ -19,7 +26,8 @@ function SideList() {
 
 
     return (
-        <Box>
+        <Box sx={{display: 'flex'}}>
+            <CssBaseline/>
             <Box component='nav' sx={{width: {sm: drawWidth}, flexShrink: {sm: 0}}}>
                 <Drawer
                     variant="permanent"
@@ -49,8 +57,8 @@ function SideList() {
             <Box
                 component="main"
                 sx={{
+                    flexGrow: 1,
                     p: 3,
-                    marginLeft: drawWidth,
                 }}
             >
                 <Routes>
