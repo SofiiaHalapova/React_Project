@@ -82,7 +82,7 @@ function Users() {
     }
 
     return (
-        <Box >
+        <Box>
             <Toolbar/>
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <span>

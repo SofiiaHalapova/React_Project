@@ -5,7 +5,7 @@ import {Route, Routes, useNavigate} from "react-router-dom";
 
 
 function SideList() {
-    const drawWidth = 220;
+    const drawWidth = '220px';
 
     const navigate = useNavigate();
 
@@ -50,7 +50,7 @@ function SideList() {
                 component="main"
                 sx={{
                     p: 3,
-                    width: {sm: `calc(100% - ${drawWidth}px)`},
+                    marginLeft: drawWidth,
                 }}
             >
                 <Routes>
