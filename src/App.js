@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {Route, Routes} from "react-router-dom";
 import Authorization from "./components/authorization";
 import Home from "./components/home";
-import Content from "./components/content";
-import Users from "./components/users";
+import Dashboard from "./pages/dashboard/dashboard";
 
 
 class App extends Component {
@@ -12,8 +11,7 @@ class App extends Component {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Authorization/>}/>
-                <Route path="/content" element={<Content/>}/>
-                <Route path="/users" element={<Users/>}/>
+                <Route path="/dashboard/*" element={<Dashboard/>}/>
             </Routes>
         );
     }

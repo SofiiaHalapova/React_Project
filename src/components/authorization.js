@@ -32,7 +32,7 @@ function Authorization() {
 
     const navigate = useNavigate();
     const navigateToContent = () => {
-        navigate('/content');
+        navigate('/dashboard');
     };
 
 
