@@ -13,11 +13,11 @@ function Authorization() {
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().required('Please enter email').email('Invalid email address'),
-        password: Yup.string().required('Please enter your password').
-        min(6, 'Password is too short - should be 6 chars minimum.').
-        max(255, 'Password is too long - should be 255 chars maximum.').
-        matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            'Password must contain at least one Latin letter and one number.')
+        password: Yup.string().required('Please enter your password')
+            .min(6, 'Password is too short - should be 6 chars minimum.')
+            .max(255, 'Password is too long - should be 255 chars maximum.')
+            .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                'Password must contain at least one Latin letter and one number.')
     });
 
     const initialValues = {
@@ -92,7 +92,8 @@ function Authorization() {
                                             disabled={!dirty || !isValid}> Sign Up </Button>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Button type='submit' variant='text' size='small' onClick={navigateToContent} sx={{ color: 'gray'}}>Skip Authorization </Button>
+                                    <Button type='submit' variant='text' size='small' onClick={navigateToContent}
+                                            sx={{color: 'gray'}}>Skip Authorization </Button>
                                 </Grid>
                             </Grid>
                         </Form>

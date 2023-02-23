@@ -1,8 +1,9 @@
 {
   "name": "react-app",
   "version": "0.1.0",
-  "homepage": "https://sofiiahalapova.github.io/react_project",
+  "homepage": "https://sofiiahalapova.github.io/",
   "private": true,
+  "proxy": "https://localhost:5000/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -13,6 +14,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "cors": "^2.8.5",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-admin": "^4.8.0",
@@ -52,5 +54,17 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0"
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SofiiaHalapova/React_Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SofiiaHalapova/React_Project/issues"
   }
 }

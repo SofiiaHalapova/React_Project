@@ -16,7 +16,7 @@ import {
     Grid,
     DialogContent, DialogTitle, IconButton
 } from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {Delete, Edit} from "@mui/icons-material";
@@ -30,19 +30,6 @@ function createData(
     return {firstName, lastName, email, isActive};
 }
 
-const rowsList = [
-    createData('Daria', "DariaSurname", "daria@gmail.com", true),
-    createData('Sofiia', "SofiiaSurname", "sofiia@gmail.com", false),
-    createData('Jane', "JaneSurname", "jane@gmail.com", false),
-    createData('Carl', "CarlSurname", "carl@gmail.com", true),
-    createData('James', "JamesSurname", "james@gmail.com", false),
-    createData('Maria', "MariaSurname", "maria@gmail.com", true),
-    createData('Lisa', "LisaSurname", "lisa@gmail.com", false),
-    createData('Cassie', "CassieSurname", "Cassie@gmail.com", false),
-    createData('Melissa', "MelissaSurname", "melissa@gmail.com", true),
-    createData('Ryan', "RyanSurname", "ryan@gmail.com", false),
-
-];
 
 function getStatus(isActive) {
     if (isActive) {
@@ -99,6 +86,51 @@ function getUserForm(errors, touched) {
 
 function Users() {
 
+    const [getUsers, setUsers] = useState([]);
+    const [getIndex, setIndex] = useState(-1);
+
+
+    useEffect(() => {
+        fetch('http://localhost:5000/users')
+            .then(res => res.json())
+            .then(data => {
+                setUsers(data);
+            })
+            .catch(error => console.log(error));
+    }, []);
+
+
+    const handleDeleteRow = (id) => {
+        fetch('http://localhost:5000/users/' + id, {method: 'DELETE'})
+            .then(res => {
+                if (res.ok) {
+                    setUsers(getUsers.filter((user, index) => index !== id));
+                } else {
+                    throw new Error('Error deleting user');
+                }
+            })
+            .catch(error => console.log(error));
+        deleteUserDialogClose();
+    };
+
+
+    const handleChangeValue = async (id, firstName, lastName, email) => {
+          await fetch(`http://localhost:5000/users/` + id, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({firstName, lastName, email})
+        })
+            .then(res =>
+                res.json())
+            .then(data => {
+                let users = getUsers;
+                users[id] = createData(data.user.firstName, data.user.lastName, data.user.email, true);
+                setUsers(users);
+            })
+            .catch(err => console.error(err));
+    };
+
+
     const [openAddUserDialog, setOpenAddUserDialog] = useState(false);
 
     const addUserDialogOpen = () => {
@@ -111,7 +143,7 @@ function Users() {
 
     const [openDeleteUserDialog, setOpenDeleteUserDialog] = useState(false);
 
-    const[getIndex, setIndex] = useState(-1);
+
     const deleteUserDialogOpen = (index) => {
         setIndex(index);
         setOpenDeleteUserDialog(true);
@@ -124,7 +156,7 @@ function Users() {
 
     const [openEditDialog, setOpenEditDialog] = useState(false);
 
-    const[getRow, setRow] = useState('');
+    const [getRow, setRow] = useState('');
 
     const editDialogOpen = (row, index) => {
         setIndex(index);
@@ -147,25 +179,7 @@ function Users() {
 
     const addNewValue = (name, lastname, email) => {
         const data = createData(name, lastname, email, true);
-        rowsList.push(data);
-    }
-
-
-    const handleChangeValue = (firstName, lastName, email, index) => {
-        let rows = getRows;
-        rows[index] = createData(firstName, lastName, email, true);
-        setRows(rows);
-    }
-
-    const [getRows, setRows] = useState(rowsList)
-
-    const handleDeleteRow = (number) => {
-        let rowCopy = [...getRows];
-        rowCopy = rowCopy.filter(
-            (item, index) => index !== number
-        );
-        setRows(rowCopy);
-        deleteUserDialogClose();
+        getUsers.push(data);
     }
 
 
@@ -233,7 +247,7 @@ function Users() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {getRows.map((row, index) => (
+                        {getUsers.map((row, index) => (
                             <TableRow key={index}>
                                 <TableCell>{row.firstName}</TableCell>
                                 <TableCell align="center">{row.lastName}</TableCell>
@@ -285,8 +299,8 @@ function Users() {
                                     email: getRow.email,
                                 }}
                                 validationSchema={validationSchema}
-                                onSubmit={values => {
-                                    handleChangeValue(values.firstName, values.lastName, values.email, getIndex);
+                                onSubmit={ async (values) =>  {
+                                    await handleChangeValue(getIndex, values.firstName, values.lastName, values.email);
                                     editDialogClose();
                                 }}
                             >
